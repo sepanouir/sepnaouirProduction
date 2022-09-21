@@ -1,0 +1,18 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+  <div  style="height: 100vh;display: flex;justify-content: center;align-items: center;width: 100%;flex-direction: column;">
+      <h1>SEPanouir</h1>
+      <h3>Créer le compte admin</h3>
+      <form id="upload" method="POST" action="/api/register" enctype="multipart/form-data"
+      style="padding: 20px 10px; background-color: #B8CEFB;min-width: 300px; box-shadow: 5px 5px 5px #618394;" 
+      >
+         <dl>
+         {{ wtf.quick_form(form)}}
+          <input class="btn btn-primary" type="submit" value="Créer">
+         </dl>
+         
+      </form>
+  </div>
+{% endblock %}

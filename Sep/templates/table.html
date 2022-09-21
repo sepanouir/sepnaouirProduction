@@ -1,0 +1,120 @@
+{% extends "home.html" %}
+{% block head %}
+  <script type="text/javascript" src="{{ url_for('static', filename='js/table.js') }}"></script>
+{% endblock %}
+ 
+{% block content %}
+<!-- style="display: none;" -->
+    <div id='url' >{{url}}</div>
+    {% raw %}
+      <div ng-controller="tableCtrl" class="table_ctrl">
+          <div class="table_container">
+            <div class="title">activities</div>
+            <div class="btns">
+              <div class="first-btns">
+                <button ng-click="add()"  style="margin: 10px;">Add</button>
+                <div ng-if="!isadd">
+                  <button ng-if="some" ng-click="deleteselected()"  style="margin: 10px;">Delete all</button>
+                </div>
+              </div>
+              <div>
+                <button >export CSV</button>
+              </div>
+            </div>
+          <table border="5" cellpadding="10" cellspacing="2">
+              <thead>
+                  <tr>
+                   
+                      <th ng-show="!abdo" ><input type="checkbox" ng-model="all" ng-change="check1()"></th>
+                      <th></th>
+                      <th  ng-repeat="col in cols">
+                        <div style="margin: 10px;">
+                          <span ng-bind="col" ng-if="!item.show"></span>
+                        </div>
+                      </th>
+                  </tr>
+              </thead>
+              <div ng-if="!load"> Loading !!!!!</div>
+              <tbody ng-if="load">
+                  <!-- below track by $index ignores duplicate values -->
+                  <tr ng-repeat="item in items track by $index">
+                    <td ng-show="!abdo">
+                      <input type="checkbox" ng-model="item.checked" ng-change="check()">
+                    </td>
+                    <td>
+                        <div ng-if="item.add">
+                          <button ng-click="create($index)" >Save</button>
+                        </div>
+                        <div ng-if="!item.add">
+                          <button ng-click="edit($index)" ng-if="!item.show">Edit</button>
+                          <button ng-click="change(item.public_id,$index)" ng-if="item.show">Save</button>
+                          <button ng-click="delete(item.public_id)">Delete</button>
+                        </div>
+
+                    </td>
+                    <td ng-repeat="col in cols">
+                      <div ng-switch on="col">
+                        <div ng-switch-when="date">
+                          <span ng-bind="item[col]" ng-if="!item.show"></span>
+                          <input type="date" name="name" ng-model="item[col]" ng-if="item.show">
+                        </div>
+                        <div ng-switch-when="details">
+                          <div style="max-width: 300px">
+                          <span ng-bind="item[col]" ng-if="!item.show" ></span>
+                          </div>
+                          <textarea name="details" ng-model="item[col]" ng-if="item.show"></textarea>
+                        </div>
+                        <div ng-switch-when="pic">
+                          <div ng-if="item[col]">
+                            <img src="{{item.downloadpic}}" height="160px" width="240px"  ng-if="!item.show">
+                          </div>
+                          <!-- <div ng-if="!item[col]" class="center">
+                            inserer un image
+                          </div> -->
+                          <div ng-if="item.show"  ng-if="load">
+                            <form enctype="multipart/form-data"  ng-if="load">
+                              <div ng-show="item.fileuploaded">Nice !!!!</div>
+                              <div ng-show="!item.fileuploaded">No god please no !!!!</div>
+                              <input type="file" ng-files="getTheFiles($files)">
+                              <input type="button" ng-click="uploadFiles(item.uploadpic,item.index)" value="Upload" />
+                            </form>
+                          </div>
+                        </div>
+                        <div ng-switch-when="vid">
+                          <div ng-if="item[col]">
+                            <video width="240px" height="160" controls ng-if="!item.show">
+                              <source src="{{item.downloadvid}}" type="video/mp4">
+                            </video>
+                          </div>
+                          <!-- <div ng-if="!item[col]" class="center">
+                            inserer un video
+                          </div> -->
+                          <div ng-if="item.show"  ng-if="load">
+                            <form enctype="multipart/form-data"  ng-if="load">
+                              <div ng-show="item.fileuploaded">Nice !!!!</div>
+                              <div ng-show="!item.fileuploaded">No god please no !!!!</div>
+                              <input type="file" ng-files="getTheFiles($files)">
+                              <input type="button" ng-click="uploadFiles(item.uploadvid,item.index)" value="Upload" />
+                            </form>
+                          </div>
+                        </div>
+                        <div ng-switch-default>
+                          <span ng-bind="item[col]" ng-if="!item.show"></span>
+                          <input type="text" name="name" ng-model="item[col]" ng-if="item.show">
+                        </div>
+                    </div>
+
+                    </td>
+                  </tr>
+              </tbody>
+          </table>
+          </div>
+      </div>
+      {% endraw %}
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/table.css') }}">
+      <script type="text/javascript">
+        d=document.getElementById('url');
+        console.log(d)
+        a=d.innerText;
+      </script>
+{% endblock %}

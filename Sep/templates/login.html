@@ -1,0 +1,32 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+  <div  style="height: 100vh;display: flex;justify-content: center;align-items: center;width: 100%;flex-direction: column;">
+      <h1>SEPanouir</h1>
+      <form id="upload" method="POST" action='{{action}}' enctype="multipart/form-data"
+      style="padding: 20px 10px; background-color: #B8CEFB;min-width: 300px; box-shadow: 5px 5px 5px #618394;" 
+      >
+         <dl>
+         {{ wtf.quick_form(form)}}
+          {% if update %}
+            <input class="btn btn-primary" type="submit" value="Changer le compte admin">
+          {% else %}
+            <input class="btn btn-primary" type="submit" value="S'inscrire">
+          {% endif %}
+         </dl>
+          {% if update %}
+          {% else %}
+            <div style="margin:10px;">
+              <a href="/api/login/update">Changer le compte admin</a>
+            </div>
+          {% endif %}         
+        {% if err %}
+          <p style="color: red;font-family: sans-serif;font-size: 20px;padding: 15px;">
+            E-mail ou mot de passe incorrect
+          </p>
+        {% endif %}
+      </form>
+  </div>
+
+{% endblock %}

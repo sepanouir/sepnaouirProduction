@@ -1,0 +1,78 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+WTForms
+{% endblock %}
+
+{% block content %}
+  <div class="container" style="max-width: 500px;">
+      {% if section %}
+      <form id="upload" method="POST" action="/sep_admin/add-section/{{section}}/" enctype="multipart/form-data">
+      {% else %}
+      <form id="upload" method="POST" action="/sep_admin/add/{{table}}/" enctype="multipart/form-data">
+
+      {% endif %}
+         <dl>
+         {{ wtf.quick_form(form)}}
+          <input class="btn btn-primary" type="submit" value="Enregistrer">
+          </dl>
+      </form>
+      <div id='progress-indicator'>
+        <label for="progress-bar" style="margin:5px;" id='progress-label'>0%</label>
+        <progress value="0" max="100" id="progress-bar">
+      </div>
+  </div>
+{% endblock %}
+
+
+{% block scripts %}
+  {{super()}}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    $('#progress-indicator').hide()
+    $('#upload').submit(function(event){
+            event.preventDefault();
+            $(this).ajaxSubmit({
+                beforeSubmit:function(){
+                    $('#progress-bar').attr('value',0);
+                    $('#progress-indicator').show()
+                },
+                uploadProgress: function(event, position, total, percentageComplete)
+                {
+                    console.log(total, percentageComplete)
+                    $('#progress-bar').attr("value", percentageComplete);
+                    $('#progress-label').text(percentageComplete+'%');
+                },
+                success:function(data){
+                    console.log('seccus')
+                    window.location.replace('{{redirect}}');
+                },
+            });
+        
+        return false;
+    });
+});
+</script>
+
+{% endblock %}
+
+
+
+{% block styles %}
+{{super()}}
+<style type="text/css">
+    #progress-indicator{
+        padding: 20px 30px ;
+        background-color: #ACCEF7;
+        margin: auto;
+        margin-bottom: 100px;
+    }
+</style>
+    
+{% endblock %}

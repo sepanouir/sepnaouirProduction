@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SEPanouir</title>
+</head>
+<body>
+
+	{% if type=='ent' %}
+	<h3>Bonjour {{user.prenom}} {{user.name}},</h3>
+	<p>Nous confirmons votre réservation à l’activité {{act.name}} le jour {{str(act.date)}} à l'heure {{str(act.heure)}} </p>
+	<p>Si vous ne pouvez pas venir, nous vous prions d'annuler votre réservation depuis votre application.</p>
+	{% else %}
+	<h3>Bonjour {{user.prenom}} {{user.name}},</h3>
+	<p>Cela confirme que la réservation à l'activité {{act.name}} a été annulée.</p>
+	<p>Au plaisir de vous revoir dans une autre activité avec SEPanouir.</p>
+	{% endif %}
+	<p>Merci!</p>
+	<p>L'équipe SEPanouir</p>
+<style type="text/css">
+	*{
+		font-family: sans-serif;
+	}
+</style>
+</body>
+</html>

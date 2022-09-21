@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+
+
+
+{% block content %}
+<main>
+		{% if 'activity' in data %}
+		<div class="activity_container">
+			<p>Dernière activité</p>
+			<div class="activity">
+				<div class='activity_header'>
+					<div class="name">{{data['activity'].name}}</div>
+					<div class="city">{{data['activity'].city}}</div>
+				</div>    
+				<div style="display: flex;flex-direction: row;justify-content: space-between;">
+					<div class="liste">liste actif : 
+						<b>
+							{{data['activity_actif']}}/
+							{{data['activity'].members}}
+						</b>
+					</div>
+					<div class="liste">liste d'attend : <b>
+					{{data['activity_attend']}}
+					</b></div>
+				</div>	
+			</div>
+		</div>	
+		{% endif %}
+	
+	<div class="data">
+		{% if data['users']!=[] %}
+		<table class="users">
+			<thead>
+				<tr>
+					<td class="center"><p>Dernière utilisateurs</p></td>
+				</tr>
+			</thead>
+	      	<tbody>
+					<a href="#">
+						<p class="view">
+						marquer tout comme vu
+						</p>      		
+					</a>
+	      		{% for user in data['users'] %}
+				<tr>
+	
+					<td class="user">
+	
+					<div >
+						<div class="userName">
+							<div style="font-weight: bold;">{{user.nom}} {{user.prenom}}</div>	
+						</div>
+						<div class="userVille">{{user.grand_ville}}</div>
+					</div>
+					<a href="User/{{user.id}}">
+						<p class="view">
+							marquer comme vu
+						</p>
+					</a>
+					</td>
+	
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% endif %}
+		{% if data['mailings']!=[] %}
+		<div class="mailing">
+			<div style="font-weight: bold;font-size: 20px;text-align: center;">
+				Dernière messages
+			</div>	
+	      	{% for mail,msgs in zip(data['mailings'],data['mailings_msg']) %}
+			<div class="mailing_content">
+				<div class="mail_date">{{conv(mail.date)}}</div>
+	      		<div class="mail_msg"><div>
+	      	{% for msg in msgs%}
+                <div style="display: flex;flex-direction: row;">
+                  <div style="font-weight: bold;font-size: 16;">{{msg[0]}}</div>  
+                  <div style="font-size: 17;margin-left: 8px;">{{msg[1]}}</div>
+                </div>
+
+              {% endfor %}
+
+
+	      	</div></div>
+	      		<a href="Mailing/{{mail.id}}">
+					<p class="view">
+						marquer comme vu
+					</p>
+	      		</a>
+			</div>
+			{% endfor %}
+		</div>
+		{% endif %}
+
+
+
+	</div>
+</main>
+{% endblock %}
+
+{% block styles%}
+{{super()}}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='/css/home.css')}}">
+{% endblock %}$
+
+
+

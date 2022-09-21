@@ -1,0 +1,80 @@
+  *{
+    /*margin:0px;*/
+    box-sizing: border-box;
+    font-size: 18px;
+    /*padding:0px;*/
+    font-family: sans-serif;
+  }
+  .table_ctrl{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+  }
+  .table_container{
+    width: max-content;
+  }
+
+  .title{
+    text-align: center;
+    margin:10px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  .first-btns{
+    display: flex;
+    flex-direction: row;
+  }
+  .btns{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding:0px 20px 0px 10px;
+  }
+
+  table {
+  border-collapse: collapse;
+  border:solid 1px #333;
+  border-radius: 1px;
+  /*overflow: hidden;*/
+  margin:0px 20px;
+  }
+  table > * {
+    border-width: 0px;
+    border-color: #333;
+  }
+  tr:nth-of-type(odd){
+    background-color: #B0C3D4;
+  }
+  tr:nth-of-type(even){
+    background-color: #E7EEEE;
+  }
+  td{
+    padding: 8px 15px;
+    width: 100%;
+  }
+  button{
+    color: #000305;
+    background-color: transparent;
+    font-weight: bold;
+    border-width: 0px;
+  }
+  button:hover{
+    cursor: pointer;
+    user-select: none;
+  }
+  input{
+    padding: 5px;
+  }
+  .center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #data_filter > label >input {
+    font-size: 16px;
+    padding: 2px;
+    height: max-content;
+    font-weight: initial;
+  }
